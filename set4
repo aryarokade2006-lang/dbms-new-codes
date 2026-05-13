@@ -1,0 +1,74 @@
+CREATE TABLE dept4(
+dept_id NUMBER PRIMARY KEY,
+dept_name VARCHAR(20),
+location VARCHAR(20)
+);
+
+CREATE TABLE emp4(
+emp_id NUMBER PRIMARY KEY,
+emp_name VARCHAR(20),
+city VARCHAR(20),
+salary NUMBER,
+department NUMBER,
+
+FOREIGN KEY(department)
+REFERENCES dept4(dept_id)
+);
+
+DESC emp4;
+DESC dept4;
+
+INSERT INTO dept4 VALUES(1,'IT','Mumbai');
+INSERT INTO dept4 VALUES(2,'HR','Pune');
+INSERT INTO dept4 VALUES(3,'Sales','Delhi');
+INSERT INTO dept4 VALUES(4,'Finance','Nashik');
+INSERT INTO dept4 VALUES(5,'Marketing','Nagpur');
+INSERT INTO dept4 VALUES(6,'Admin','Pune');
+INSERT INTO dept4 VALUES(7,'Testing','Mumbai');
+INSERT INTO dept4 VALUES(8,'Support','Delhi');
+INSERT INTO dept4 VALUES(9,'Design','Pune');
+INSERT INTO dept4 VALUES(10,'Security','Nashik');
+
+INSERT INTO emp4 VALUES(101,'Amit','Mumbai',50000,1);
+INSERT INTO emp4 VALUES(102,'Neha','Pune',45000,2);
+INSERT INTO emp4 VALUES(103,'Riddhi','Delhi',60000,1);
+INSERT INTO emp4 VALUES(104,'Pooja','Nashik',55000,3);
+INSERT INTO emp4 VALUES(105,'Rahul','Mumbai',70000,4);
+INSERT INTO emp4 VALUES(106,'Aniket','Pune',40000,5);
+INSERT INTO emp4 VALUES(107,'Seema','Delhi',65000,6);
+INSERT INTO emp4 VALUES(108,'Akash','Nagpur',48000,7);
+INSERT INTO emp4 VALUES(109,'Reena','Pune',52000,8);
+INSERT INTO emp4 VALUES(110,'Om','Mumbai',75000,9);
+
+UPDATE emp4
+SET city='Pune'
+WHERE department=
+(
+SELECT dept_id
+FROM dept4
+WHERE dept_name='IT'
+);
+
+DELETE FROM emp4
+WHERE salary > 100000;
+
+SELECT emp_name,
+salary - salary*0.05 AS salary_after_tax
+FROM emp4;
+
+SELECT *
+FROM emp4
+WHERE city <> 'Mumbai'
+AND emp_name LIKE 'A%';
+
+SELECT *
+FROM emp4
+WHERE department=
+(
+SELECT dept_id
+FROM dept4
+WHERE dept_name='IT'
+)
+AND salary > 50000;
+
+SELECT * FROM emp4;
