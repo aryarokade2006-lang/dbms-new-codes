@@ -1,0 +1,91 @@
+-- Create Stud_Marks Table
+
+CREATE TABLE Stud_Marks(
+    Roll NUMBER PRIMARY KEY,
+    Name VARCHAR2(30),
+    Total_Marks NUMBER
+);
+
+
+
+-- Create Result Table
+
+CREATE TABLE Result(
+    Roll NUMBER,
+    Name VARCHAR2(30),
+    Class VARCHAR2(30)
+);
+
+
+
+-- Insert Records into Stud_Marks
+
+INSERT INTO Stud_Marks VALUES(1,'Riddhi',1200);
+INSERT INTO Stud_Marks VALUES(2,'Arya',950);
+INSERT INTO Stud_Marks VALUES(3,'Sneha',850);
+INSERT INTO Stud_Marks VALUES(4,'Rahul',700);
+
+COMMIT;
+
+
+
+---------------------------------------------------
+-- Create Stored Procedure proc_Grade
+---------------------------------------------------
+
+CREATE OR REPLACE PROCEDURE proc_Grade(
+    p_roll IN NUMBER,
+    p_name IN VARCHAR2,
+    p_marks IN NUMBER
+)
+IS
+    v_class VARCHAR2(30);
+BEGIN
+
+    IF p_marks <= 1500 AND p_marks >= 990 THEN
+        v_class := 'Distinction';
+
+    ELSIF p_marks BETWEEN 900 AND 989 THEN
+        v_class := 'First Class';
+
+    ELSIF p_marks BETWEEN 825 AND 899 THEN
+        v_class := 'Higher Second Class';
+
+    ELSE
+        v_class := 'Fail';
+    END IF;
+
+    
+    INSERT INTO Result
+    VALUES(p_roll, p_name, v_class);
+
+END;
+/
+    
+
+
+---------------------------------------------------
+-- PL/SQL Block to Call Procedure
+---------------------------------------------------
+
+BEGIN
+
+    FOR rec IN (SELECT * FROM Stud_Marks)
+    LOOP
+
+        proc_Grade(rec.Roll,
+                   rec.Name,
+                   rec.Total_Marks);
+
+    END LOOP;
+
+END;
+/
+    
+
+
+---------------------------------------------------
+-- Display Result Table
+---------------------------------------------------
+
+SELECT * FROM Result;
