@@ -1,0 +1,115 @@
+Set 7
+Create the table below and solve the following queries.
+
+1. Start a transaction and insert a new employee record. Commit the transaction.
+2. Start a transaction, update employee salary, and rollback the transaction.
+3. Start a transaction, create a savepoint named SP1, update salary, and rollback to SP1.
+4. Demonstrate the use of multiple savepoints within a single transaction.
+5. Start a transaction, delete an employee record, and commit the changes
+
+CREATE TABLE emp7(
+employee_id NUMBER(6) PRIMARY KEY,
+first_name VARCHAR2(20),
+last_name VARCHAR2(25) NOT NULL,
+email VARCHAR2(25) NOT NULL,
+phone_number VARCHAR2(20),
+hire_date DATE NOT NULL,
+job_id VARCHAR2(10) NOT NULL,
+salary NUMBER(8,2),
+commission_pct NUMBER(2,2),
+manager_id NUMBER(6),
+department_id NUMBER(4)
+);
+
+INSERT INTO emp7 VALUES(
+101,
+'Riddhi',
+'Bacchewar',
+'RMAIL',
+'9999999999',
+'10-JAN-2024',
+'IT_PROG',
+50000,
+0.10,
+201,
+10
+);
+
+INSERT INTO emp7 VALUES(
+102,
+'Amit',
+'Sharma',
+'AMAIL',
+'8888888888',
+'12-FEB-2024',
+'HR_REP',
+45000,
+0.20,
+202,
+20
+);
+
+INSERT INTO emp7 VALUES(
+103,
+'Neha',
+'Patil',
+'NMAIL',
+'7777777777',
+'15-MAR-2024',
+'CLERK',
+60000,
+0.15,
+203,
+30
+);
+
+INSERT INTO emp7 VALUES(
+104,
+'Kiran',
+'More',
+'KMAIL',
+'6666666666',
+'20-APR-2024',
+'SA_REP',
+40000,
+0.10,
+204,
+40
+);
+
+COMMIT;
+
+UPDATE emp7
+SET salary=80000
+WHERE employee_id=104;
+
+ROLLBACK;
+
+SAVEPOINT SP1;
+
+UPDATE emp7
+SET salary=90000
+WHERE employee_id=104;
+
+ROLLBACK TO SP1;
+
+SAVEPOINT A;
+
+UPDATE emp7
+SET salary=95000
+WHERE employee_id=104;
+
+SAVEPOINT B;
+
+UPDATE emp7
+SET department_id=50
+WHERE employee_id=104;
+
+ROLLBACK TO B;
+
+DELETE FROM emp7
+WHERE employee_id=104;
+
+COMMIT;
+
+SELECT * FROM emp7;
