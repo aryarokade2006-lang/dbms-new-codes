@@ -1,0 +1,91 @@
+CREATE TABLE dept(
+dept_id NUMBER PRIMARY KEY,
+dept_name VARCHAR(20),
+location VARCHAR(20)
+);
+
+CREATE TABLE emp_record(
+emp_id NUMBER PRIMARY KEY,
+emp_name VARCHAR(20),
+city VARCHAR(20),
+salary NUMBER,
+department NUMBER,
+
+FOREIGN KEY(department)
+REFERENCES dept(dept_id)
+);
+
+DESC emp_record;
+DESC dept;
+
+INSERT INTO dept VALUES(1,'IT','Mumbai');
+INSERT INTO dept VALUES(2,'HR','Pune');
+INSERT INTO dept VALUES(3,'Sales','Delhi');
+INSERT INTO dept VALUES(4,'Finance','Nashik');
+INSERT INTO dept VALUES(5,'Marketing','Nagpur');
+INSERT INTO dept VALUES(6,'Admin','Pune');
+INSERT INTO dept VALUES(7,'Testing','Mumbai');
+INSERT INTO dept VALUES(8,'Support','Delhi');
+INSERT INTO dept VALUES(9,'Design','Pune');
+INSERT INTO dept VALUES(10,'Security','Nashik');
+
+INSERT INTO emp_record
+VALUES(101,'Amit','Mumbai',50000,1);
+
+INSERT INTO emp_record
+VALUES(102,'Neha','Pune',45000,2);
+
+INSERT INTO emp_record
+VALUES(103,'Riddhi','Delhi',60000,1);
+
+INSERT INTO emp_record
+VALUES(104,'Pooja','Nashik',55000,3);
+
+INSERT INTO emp_record
+VALUES(105,'Rahul','Mumbai',70000,4);
+
+INSERT INTO emp_record
+VALUES(106,'Aniket','Pune',40000,5);
+
+INSERT INTO emp_record
+VALUES(107,'Seema','Delhi',65000,6);
+
+INSERT INTO emp_record
+VALUES(108,'Akash','Nagpur',48000,7);
+
+INSERT INTO emp_record
+VALUES(109,'Reena','Pune',52000,8);
+
+INSERT INTO emp_record
+VALUES(110,'Om','Mumbai',75000,9);
+
+SELECT * FROM dept;
+SELECT * FROM emp_record;
+
+INSERT INTO dept
+VALUES(11,'Computer','Pune');
+
+INSERT INTO emp_record
+(emp_id, emp_name, city, department)
+
+VALUES
+(111,'Kiran','Pune',11);
+
+UPDATE emp_record
+SET salary = salary + salary*0.20;
+
+SELECT emp_name,
+salary*12 AS annual_salary
+FROM emp_record
+WHERE emp_name LIKE '_e%';
+
+UPDATE emp_record
+SET city='Pune'
+WHERE department=
+(
+SELECT dept_id
+FROM dept
+WHERE dept_name='IT'
+);
+
+SELECT * FROM emp_record;
