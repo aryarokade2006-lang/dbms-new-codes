@@ -1,0 +1,26 @@
+CREATE USER C##SECA110
+IDENTIFIED BY 123;
+
+GRANT CONNECT, RESOURCE
+TO C##SECA110;
+
+GRANT SELECT
+ON employee_rec
+TO C##SECA110;
+
+GRANT INSERT, UPDATE
+ON employee_rec
+TO C##SECA110;
+
+REVOKE UPDATE
+ON employee_rec
+FROM C##SECA110;
+
+CREATE ROLE manager_role;
+
+GRANT SELECT, DELETE
+ON employee_rec
+TO manager_role;
+
+REVOKE manager_role
+FROM C##SECA110;
