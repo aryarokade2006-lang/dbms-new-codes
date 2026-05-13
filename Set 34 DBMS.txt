@@ -1,0 +1,100 @@
+Set 34
+Employee(employee_name,street,city)
+Works(employee_name,company_name,salary)
+Company(company_name,city)
+Manages(employee_name,manager_name)
+1. Find the names of employees who work for First Bank Coorporation.
+2. Find the names and cities of residence of all employees who work for First Bank Coorporation
+3. Find the names, street addresses, and cities of residence of all employees who work for First Bank
+Coorporation and earn more than $10000.
+4.Find all employees in the database who lives in the same cities as tha companies for which they work.
+5.Find all employees in the database who lives in the same cities and on the same streets as do their manager.
+6.Find all employees in the database who do not work for First Bank Coorporation
+7.Give all employees of First Bank Coorporation” a 10% raise
+8.Delete all tuples in the “Works” relation for employees of “Small Bank Coorporation”
+
+CREATE TABLE employee34(
+employee_name VARCHAR2(30) PRIMARY KEY,
+street VARCHAR2(30),
+city VARCHAR2(20)
+);
+
+CREATE TABLE company34(
+company_name VARCHAR2(40) PRIMARY KEY,
+city VARCHAR2(20)
+);
+
+CREATE TABLE works34(
+employee_name VARCHAR2(30),
+company_name VARCHAR2(40),
+salary NUMBER,
+FOREIGN KEY(employee_name) REFERENCES employee34(employee_name),
+FOREIGN KEY(company_name) REFERENCES company34(company_name)
+);
+
+CREATE TABLE manages34(
+employee_name VARCHAR2(30),
+manager_name VARCHAR2(30)
+);
+
+INSERT INTO employee34 VALUES('Amit','MG Road','Pune');
+INSERT INTO employee34 VALUES('Riddhi','FC Road','Mumbai');
+INSERT INTO employee34 VALUES('Neha','JM Road','Pune');
+INSERT INTO employee34 VALUES('Pooja','Camp','Delhi');
+INSERT INTO employee34 VALUES('Rahul','MG Road','Pune');
+
+INSERT INTO company34 VALUES('First Bank Corporation','Pune');
+INSERT INTO company34 VALUES('Small Bank Corporation','Mumbai');
+INSERT INTO company34 VALUES('Infosys','Pune');
+
+INSERT INTO works34 VALUES('Amit','First Bank Corporation',12000);
+INSERT INTO works34 VALUES('Riddhi','First Bank Corporation',9000);
+INSERT INTO works34 VALUES('Neha','Small Bank Corporation',15000);
+INSERT INTO works34 VALUES('Pooja','Infosys',20000);
+INSERT INTO works34 VALUES('Rahul','First Bank Corporation',18000);
+
+INSERT INTO manages34 VALUES('Amit','Rahul');
+INSERT INTO manages34 VALUES('Riddhi','Amit');
+INSERT INTO manages34 VALUES('Neha','Rahul');
+INSERT INTO manages34 VALUES('Pooja','Amit');
+
+COMMIT;
+
+SELECT employee_name
+FROM works34
+WHERE company_name='First Bank Corporation';
+
+SELECT e.employee_name, e.city
+FROM employee34 e, works34 w
+WHERE e.employee_name=w.employee_name
+AND w.company_name='First Bank Corporation';
+
+SELECT e.employee_name, e.street, e.city
+FROM employee34 e, works34 w
+WHERE e.employee_name=w.employee_name
+AND w.company_name='First Bank Corporation'
+AND w.salary > 10000;
+
+SELECT e.employee_name
+FROM employee34 e, works34 w, company34 c
+WHERE e.employee_name=w.employee_name
+AND w.company_name=c.company_name
+AND e.city=c.city;
+
+SELECT e.employee_name
+FROM employee34 e, manages34 m, employee34 mgr
+WHERE e.employee_name=m.employee_name
+AND m.manager_name=mgr.employee_name
+AND e.city=mgr.city
+AND e.street=mgr.street;
+
+SELECT employee_name
+FROM works34
+WHERE company_name <> 'First Bank Corporation';
+
+UPDATE works34
+SET salary = salary + salary*0.10
+WHERE company_name='First Bank Corporation';
+
+DELETE FROM works34
+WHERE company_name='Small Bank Corporation';
