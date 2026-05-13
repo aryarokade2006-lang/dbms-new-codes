@@ -1,0 +1,92 @@
+Set 2
+Create Customer and Account table and add rows shown below
+
+customer table                                    account table            
+
+CREATE TABLE customer(
+c_id VARCHAR(5) PRIMARY KEY,
+cname VARCHAR(20),
+city VARCHAR(20)
+);
+
+CREATE TABLE account(
+acc_no VARCHAR(5) PRIMARY KEY,
+c_id VARCHAR(5),
+acc_type VARCHAR(20),
+amount NUMBER(10),
+
+FOREIGN KEY(c_id)
+REFERENCES customer(c_id)
+);
+
+INSERT INTO customer VALUES('C1','Pooja','Pune');
+INSERT INTO customer VALUES('C2','Riddhi','Mumbai');
+INSERT INTO customer VALUES('C3','Amit','Pune');
+INSERT INTO customer VALUES('C4','Neha','Delhi');
+INSERT INTO customer VALUES('C5','Rahul','Nashik');
+
+INSERT INTO account VALUES('A1','C1','Saving',50000);
+INSERT INTO account VALUES('A2','C2','Current',70000);
+INSERT INTO account VALUES('A3','C3','Saving',30000);
+INSERT INTO account VALUES('A4','C4','Current',90000);
+INSERT INTO account VALUES('A5','C5','Saving',40000);
+
+SELECT cname, acc_type, amount
+FROM customer, account
+WHERE customer.c_id=account.c_id
+AND acc_type='Saving';
+
+SELECT *
+FROM customer
+NATURAL JOIN account;
+
+SELECT *
+FROM customer
+LEFT JOIN account
+ON customer.c_id=account.c_id;
+
+SELECT *
+FROM customer
+RIGHT JOIN account
+ON customer.c_id=account.c_id;
+
+SELECT *
+FROM customer
+WHERE city=
+(
+SELECT city
+FROM customer
+WHERE cname='Pooja'
+);
+
+SELECT *
+FROM account
+WHERE amount < (
+    SELECT AVG(amount)
+    FROM account
+);
+
+SELECT c_id
+FROM account
+WHERE amount = (
+    SELECT MAX(amount)
+    FROM account
+);
+
+SELECT amount, acc_type
+FROM account a
+WHERE amount = (
+    SELECT MIN(amount)
+    FROM account
+    WHERE acc_type = a.acc_type
+);
+
+SELECT amount
+FROM account
+WHERE amount > ANY (
+    SELECT amount
+    FROM account
+    WHERE acc_type = 'Saving'
+);
+
+                   
