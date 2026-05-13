@@ -1,0 +1,81 @@
+Set 13
+1.The Hr department needs a report on job grades and salaries.To familiarize yourself with the SALGRADE
+table, first show the structure of the SALgrade table. Then create a query that displays the
+name,job,department name ,salary and grade for all employees.
+2.Display the ENAME,SAL,MGR,DNAME of employees whose salary is more than 2000.Use the ON clause.
+3.Display the EMPNO,ENAME,JOB,DEPTNO,DNAME,LOC of employees.Use left outer join.
+4.Display the Ename, Dname of employees.Use right outer join.
+5.Display the EMPNO,DNAME,LOC of employees.Use full outer join.
+
+CREATE TABLE dept13(
+deptno NUMBER(4) PRIMARY KEY,
+dname VARCHAR2(30) NOT NULL,
+loc VARCHAR2(30)
+);
+
+CREATE TABLE emp13(
+empno NUMBER(6) PRIMARY KEY,
+ename VARCHAR2(25) NOT NULL,
+job VARCHAR2(10) NOT NULL,
+mgr NUMBER(6),
+sal NUMBER(8,2),
+comm NUMBER(2,2),
+deptno NUMBER(4),
+FOREIGN KEY(deptno) REFERENCES dept13(deptno)
+);
+
+CREATE TABLE salgrade13(
+grade NUMBER,
+losal NUMBER,
+hisal NUMBER
+);
+
+INSERT INTO dept13 VALUES(10,'ACCOUNTING','NEW YORK');
+INSERT INTO dept13 VALUES(20,'RESEARCH','DALLAS');
+INSERT INTO dept13 VALUES(30,'SALES','CHICAGO');
+INSERT INTO dept13 VALUES(40,'OPERATIONS','BOSTON');
+
+INSERT INTO emp13 VALUES(7839,'KING','PRESIDENT',NULL,5000,NULL,10);
+INSERT INTO emp13 VALUES(7698,'BLAKE','MANAGER',7839,2850,NULL,30);
+INSERT INTO emp13 VALUES(7499,'ALLEN','SALESMAN',7698,1600,0.30,30);
+INSERT INTO emp13 VALUES(7521,'WARD','SALESMAN',7698,1250,0.50,30);
+INSERT INTO emp13 VALUES(7566,'JONES','MANAGER',7839,2975,NULL,20);
+INSERT INTO emp13 VALUES(7788,'SCOTT','ANALYST',7566,3000,NULL,20);
+
+INSERT INTO salgrade13 VALUES(1,700,1200);
+INSERT INTO salgrade13 VALUES(2,1201,1400);
+INSERT INTO salgrade13 VALUES(3,1401,2000);
+INSERT INTO salgrade13 VALUES(4,2001,3000);
+INSERT INTO salgrade13 VALUES(5,3001,9999);
+
+COMMIT;
+
+DESC salgrade13;
+
+SELECT ename, job, dname, sal, grade
+FROM emp13 e
+JOIN dept13 d
+ON e.deptno = d.deptno
+JOIN salgrade13 s
+ON e.sal BETWEEN s.losal AND s.hisal;
+
+SELECT ename, sal, mgr, dname
+FROM emp13 e
+JOIN dept13 d
+ON e.deptno = d.deptno
+WHERE sal > 2000;
+
+SELECT empno, ename, job, e.deptno, dname, loc
+FROM emp13 e
+LEFT OUTER JOIN dept13 d
+ON e.deptno = d.deptno;
+
+SELECT ename, dname
+FROM emp13 e
+RIGHT OUTER JOIN dept13 d
+ON e.deptno = d.deptno;
+
+SELECT empno, dname, loc
+FROM emp13 e
+FULL OUTER JOIN dept13 d
+ON e.deptno = d.deptno;
