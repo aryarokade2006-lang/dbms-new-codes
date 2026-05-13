@@ -1,0 +1,127 @@
+CREATE TABLE emp6( employee_id NUMBER(6) PRIMARY KEY,first_name VARCHAR2(20),
+last_name VARCHAR2(25) NOT NULL,
+email VARCHAR2(25) NOT NULL,
+phone_number VARCHAR2(20),
+hire_date DATE NOT NULL,
+job_id VARCHAR2(10) NOT NULL,
+salary NUMBER(8,2),
+commission_pct NUMBER(2,2),
+manager_id NUMBER(6),
+department_id NUMBER(4)
+);
+
+CREATE TABLE dept6(
+department_id NUMBER(4) PRIMARY KEY,
+department_name VARCHAR2(30) NOT NULL,
+manager_id NUMBER(6),
+location_id NUMBER(4)
+);
+
+INSERT INTO dept6 VALUES(10,'IT',101,1);
+INSERT INTO dept6 VALUES(20,'HR',102,2);
+INSERT INTO dept6 VALUES(30,'SALES',103,3);
+INSERT INTO dept6 VALUES(40,'FINANCE',104,4);
+INSERT INTO dept6 VALUES(50,'ADMIN',105,5);
+
+INSERT INTO emp6 VALUES(
+101,
+'Vaishali',
+'Patil',
+'VMAIL',
+'9999999999',
+'10-JAN-2024',
+'IT_PROG',
+50000,
+0.10,
+201,
+10
+);
+
+INSERT INTO emp6 VALUES(
+102,
+'Riddhi',
+'Bacchewar',
+'RMAIL',
+'8888888888',
+'12-FEB-2024',
+'HR_REP',
+45000,
+0.20,
+202,
+20
+);
+
+INSERT INTO emp6 VALUES(
+103,
+'Amit',
+'Sharma',
+'AMAIL',
+'7777777777',
+'15-MAR-2024',
+'SA_REP',
+40000,
+0.15,
+203,
+30
+);
+
+INSERT INTO emp6 VALUES(
+104,
+'Neha',
+'Kadam',
+'NMAIL',
+'6666666666',
+'20-APR-2024',
+'FI_ACC',
+55000,
+0.25,
+204,
+40
+);
+
+INSERT INTO emp6 VALUES(
+105,
+'Pooja',
+'More',
+'PMAIL',
+'5555555555',
+'25-MAY-2024',
+'AD_ASST',
+35000,
+0.05,
+205,
+50
+);
+
+CREATE TABLE emptest AS
+SELECT * FROM emp6;
+
+SELECT * FROM emptest;
+
+INSERT INTO emptest
+(employee_id, first_name, last_name, email, hire_date, job_id, salary)
+
+VALUES
+(106, USER, 'User', 'USERMAIL', SYSDATE, 'CLERK', 30000);
+
+UPDATE emptest
+SET salary = salary + salary*0.15
+WHERE first_name='Vaishali';
+
+COMMIT;
+
+UPDATE emptest
+SET salary = salary + salary*0.10
+WHERE department_id = 10;
+
+UPDATE emptest
+SET commission_pct = NULL;
+
+DELETE FROM emptest
+WHERE department_id = 10;
+
+SELECT * FROM emptest;
+
+ROLLBACK;
+
+SELECT * FROM emptest;
