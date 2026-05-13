@@ -1,0 +1,52 @@
+Set 11
+1. Create a table dept1 as below with following columns:
+DEPTNO integer pk, dname varchar2(30) 
+
+
+CREATE TABLE dept1(
+dept_no NUMBER(10) PRIMARY KEY,
+dname VARCHAR2(30) NOT NULL,
+location VARCHAR2(30) NOT NULL
+);
+
+ALTER TABLE dept1
+ADD mgr NUMBER;
+
+CREATE TABLE emp11(
+emp_no NUMBER(10),
+ename VARCHAR2(20),
+sal_number NUMBER(10,2),
+dept_number NUMBER(10)
+);
+
+ALTER TABLE emp11
+ADD CONSTRAINT pk_emp
+PRIMARY KEY(emp_no);
+
+ALTER TABLE emp11
+MODIFY ename VARCHAR2(20) NOT NULL;
+
+ALTER TABLE emp11
+ADD CONSTRAINT chk_sal
+CHECK(sal_number > 10000);
+
+ALTER TABLE emp11
+ADD CONSTRAINT fk_dept
+FOREIGN KEY(dept_number)
+REFERENCES dept1(dept_no);
+
+CREATE TABLE dept11 AS
+SELECT * FROM dept1;
+
+CREATE TABLE employee11 AS
+SELECT * FROM emp11;
+
+ALTER TABLE emp11
+ADD address VARCHAR2(30);
+
+ALTER TABLE emp11
+RENAME COLUMN sal_number TO salary;
+
+SELECT constraint_name
+FROM user_constraints
+WHERE table_name='EMP11';
