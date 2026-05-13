@@ -1,0 +1,143 @@
+Set 12
+Create the tables below and solve the following queries.
+Employees
+1.Write a query for the HR department to produce the addresses of all the departments. Use the EMP and
+DEPT tables. Show the EMPNO, ENAME,SAL,DNAME and LOC in the output. Use a NATURAL JOIN to produce
+the results.
+2.The HR department needs a report of all employees. Write a query to display the JOB, MGR,
+SAL,COMM,DNAME of employees whose JOB is SALESMAN.
+3.The HR department needs a report of employees in LOC DALLAS. Display the ENAME,job, DEPTNO and
+DNAME for all employees who work in DALLAS.
+4.Modify the previous Query to diaplay all employees including King,who has no manager.Order the results
+by the employee number.
+
+CREATE TABLE dept(
+deptno NUMBER(10) PRIMARY KEY,
+dname VARCHAR2(20),
+loc VARCHAR2(20)
+);
+
+CREATE TABLE emp(
+empno NUMBER(10) PRIMARY KEY,
+ename VARCHAR2(20),
+job VARCHAR2(20),
+mgr NUMBER(10),
+hiredate DATE,
+sal NUMBER(10,2),
+comm NUMBER(10,2),
+deptno NUMBER(10),
+
+FOREIGN KEY(deptno)
+REFERENCES dept(deptno)
+);
+
+INSERT INTO dept VALUES(10,'ACCOUNTING','NEW YORK');
+
+INSERT INTO dept VALUES(20,'RESEARCH','DALLAS');
+
+INSERT INTO dept VALUES(30,'SALES','CHICAGO');
+
+INSERT INTO dept VALUES(40,'OPERATIONS','BOSTON');
+
+INSERT INTO emp VALUES(
+7839,
+'KING',
+'PRESIDENT',
+NULL,
+'17-NOV-1981',
+5000,
+NULL,
+10
+);
+
+INSERT INTO emp VALUES(
+7698,
+'BLAKE',
+'MANAGER',
+7839,
+'01-MAY-1981',
+2850,
+NULL,
+30
+);
+
+INSERT INTO emp VALUES(
+7499,
+'ALLEN',
+'SALESMAN',
+7698,
+'20-FEB-1981',
+1600,
+300,
+30
+);
+
+INSERT INTO emp VALUES(
+7521,
+'WARD',
+'SALESMAN',
+7698,
+'22-FEB-1981',
+1250,
+500,
+30
+);
+
+INSERT INTO emp VALUES(
+7566,
+'JONES',
+'MANAGER',
+7839,
+'02-APR-1981',
+2975,
+NULL,
+20
+);
+
+INSERT INTO emp VALUES(
+7900,
+'JAMES',
+'CLERK',
+7698,
+'03-DEC-1981',
+950,
+NULL,
+30
+);
+
+INSERT INTO emp VALUES(
+7788,
+'SCOTT',
+'ANALYST',
+7566,
+'09-DEC-1982',
+3000,
+NULL,
+20
+);
+
+COMMIT;
+
+SELECT empno, ename, sal, dname, loc
+FROM emp
+NATURAL JOIN dept;
+
+SELECT job, mgr, sal, comm, dname
+FROM emp
+JOIN dept
+ON emp.deptno = dept.deptno
+WHERE job = 'SALESMAN';
+
+SELECT ename, job, emp.deptno, dname
+FROM emp
+JOIN dept
+ON emp.deptno = dept.deptno
+WHERE loc = 'DALLAS';
+
+SELECT empno, ename, job, mgr, emp.deptno, dname
+FROM emp
+LEFT JOIN dept
+ON emp.deptno = dept.deptno
+WHERE loc = 'DALLAS'
+OR mgr IS NULL
+ORDER BY empno;
