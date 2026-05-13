@@ -1,0 +1,50 @@
+CREATE TABLE emp15(
+empno NUMBER PRIMARY KEY,
+ename VARCHAR2(20),
+sal NUMBER
+);
+
+INSERT INTO emp15
+VALUES(101,'Riddhi',50000);
+
+COMMIT;
+
+DECLARE
+
+v_empno NUMBER := &empno;
+
+v_ename VARCHAR2(20) := '&ename';
+
+v_sal NUMBER := &sal;
+
+v_count NUMBER;
+
+BEGIN
+
+SELECT COUNT(*)
+INTO v_count
+FROM emp15
+WHERE empno = v_empno;
+
+IF v_count = 0 THEN
+
+INSERT INTO emp15
+VALUES(v_empno,v_ename,v_sal);
+
+DBMS_OUTPUT.PUT_LINE('RECORD INSERTED');
+
+ELSE
+
+UPDATE emp15
+SET ename = v_ename,
+sal = v_sal
+WHERE empno = v_empno;
+
+DBMS_OUTPUT.PUT_LINE('RECORD UPDATED');
+
+END IF;
+
+END;
+/
+
+SELECT * FROM emp15;
