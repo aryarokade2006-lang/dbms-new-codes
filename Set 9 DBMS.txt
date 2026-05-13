@@ -1,0 +1,85 @@
+Set 9
+Create the employee table with all constraints and solve the following queries. -
+Employee (emp_id, emp_name, department, city, salary)
+1. Display department-wise total salary of employees.
+2. Display department-wise average salary.
+3. City-wise employee count greater than 3
+4. Department-wise maximum salary above 60,000
+5. Display department and city-wise total salary.
+6. Display departments having more than one employee.
+7. Display city-wise employee count in descending order.
+
+CREATE TABLE emp9(
+emp_id NUMBER PRIMARY KEY,
+emp_name VARCHAR2(20),
+department VARCHAR2(20),
+city VARCHAR2(20),
+salary NUMBER
+);
+
+INSERT INTO emp9 VALUES(101,'Riddhi','IT','Pune',50000);
+
+INSERT INTO emp9 VALUES(102,'Amit','HR','Mumbai',45000);
+
+INSERT INTO emp9 VALUES(103,'Neha','IT','Pune',60000);
+
+INSERT INTO emp9 VALUES(104,'Pooja','Sales','Delhi',55000);
+
+INSERT INTO emp9 VALUES(105,'Rahul','IT','Mumbai',70000);
+
+INSERT INTO emp9 VALUES(106,'Kiran','HR','Pune',40000);
+
+INSERT INTO emp9 VALUES(107,'Seema','Sales','Delhi',65000);
+
+INSERT INTO emp9 VALUES(108,'Akash','IT','Pune',48000);
+
+INSERT INTO emp9 VALUES(109,'Rohan','IT','Pune',52000);
+
+COMMIT;
+
+SELECT
+department,
+SUM(salary) AS total_salary
+FROM emp9
+GROUP BY department;
+
+SELECT
+department,
+AVG(salary) AS average_salary
+FROM emp9
+GROUP BY department;
+
+SELECT
+city,
+COUNT(*) AS total_employees
+FROM emp9
+GROUP BY city
+HAVING COUNT(*) >= 3;
+
+SELECT
+department,
+MAX(salary) AS max_salary
+FROM emp9
+GROUP BY department
+HAVING MAX(salary) > 60000;
+
+SELECT
+department,
+city,
+SUM(salary) AS total_salary
+FROM emp9
+GROUP BY department, city;
+
+SELECT
+department,
+COUNT(*) AS total_employees
+FROM emp9
+GROUP BY department
+HAVING COUNT(*) > 1;
+
+SELECT
+city,
+COUNT(*) AS total_employees
+FROM emp9
+GROUP BY city
+ORDER BY total_employees DESC;
