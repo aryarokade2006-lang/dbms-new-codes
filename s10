@@ -1,0 +1,65 @@
+INSERT INTO emp10 VALUES(101,'Riddhi','IT','Pune',50000);
+
+INSERT INTO emp10 VALUES(102,'Amit','HR','Mumbai',45000);
+
+INSERT INTO emp10 VALUES(103,'Neha','IT','Pune',60000);
+
+INSERT INTO emp10 VALUES(104,'Pooja','Sales','Delhi',55000);
+
+INSERT INTO emp10 VALUES(105,'Rahul','IT','Mumbai',70000);
+
+INSERT INTO emp10 VALUES(106,'Kiran','HR','Pune',40000);
+
+INSERT INTO emp10 VALUES(107,'Seema','Sales','Delhi',65000);
+
+INSERT INTO emp10 VALUES(108,'Akash','IT','Pune',48000);
+
+INSERT INTO emp10 VALUES(109,'Rohan','IT','Pune',52000);
+
+COMMIT;
+
+SELECT
+department,
+SUM(salary) AS total_salary
+FROM emp10
+GROUP BY department
+HAVING SUM(salary) > 200000;
+
+SELECT
+department,
+AVG(salary) AS average_salary
+FROM emp10
+GROUP BY department
+HAVING AVG(salary) > 40000;
+
+SELECT
+city,
+COUNT(*) AS total_employees
+FROM emp10
+GROUP BY city;
+
+SELECT
+department,
+MAX(salary) AS max_salary
+FROM emp10
+GROUP BY department;
+
+SELECT
+city,
+AVG(salary) AS average_salary
+FROM emp10
+GROUP BY city;
+
+SELECT
+department,
+COUNT(*) AS total_employees
+FROM emp10
+GROUP BY department
+HAVING COUNT(*) > 3;
+
+SELECT
+city,
+COUNT(*) AS total_employees
+FROM emp10
+GROUP BY city
+ORDER BY total_employees ASC;
