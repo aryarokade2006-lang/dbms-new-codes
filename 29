@@ -1,0 +1,13 @@
+use department
+
+db.teacher.insertMany([{name:"Riddhi",department:"IT",experience:5,salary:50000},{name:"Amit",department:"HR",experience:3,salary:40000},{name:"Neha",department:"IT",experience:6,salary:60000},{name:"Pooja",department:"Sales",experience:4,salary:45000},{name:"Rahul",department:"HR",experience:2,salary:35000}])
+
+db.teacher.aggregate([{$group:{_id:"$department",avg_salary:{$avg:"$salary"}}}])
+
+db.teacher.aggregate([{$group:{_id:"$department",total_employees:{$sum:1}}}])
+
+db.teacher.aggregate([{$group:{_id:"$department",min_salary:{$min:"$salary"}}}])
+
+db.teacher.createIndex({department:1})
+
+db.teacher.dropIndex({department:1})
