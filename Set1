@@ -1,0 +1,95 @@
+CREATE TABLE Person(
+driver_id INT PRIMARY KEY,
+name VARCHAR(30),
+address VARCHAR(50)
+);
+
+CREATE TABLE Car(
+license VARCHAR(20) PRIMARY KEY,
+model VARCHAR(20),
+year INT
+);
+
+CREATE TABLE Accident(
+report_no INT PRIMARY KEY,
+date_acc DATE,
+location VARCHAR(30)
+);
+
+CREATE TABLE Owns(
+driver_id INT,
+license VARCHAR(20),
+PRIMARY KEY(driver_id, license),
+FOREIGN KEY(driver_id) REFERENCES Person(driver_id),
+FOREIGN KEY(license) REFERENCES Car(license)
+);
+
+CREATE TABLE Participated(
+driver_id INT,
+model VARCHAR(20),
+report_no INT,
+damage_amount INT,
+FOREIGN KEY(report_no) REFERENCES Accident(report_no)
+);
+
+INSERT INTO person VALUES('D1','Riddhi','Pune');
+INSERT INTO person VALUES('D2','Amit','Mumbai');
+INSERT INTO person VALUES('D3','Pooja','Nashik');
+INSERT INTO person VALUES('D4','Rahul','Delhi');
+INSERT INTO person VALUES('D5','Neha','Nagpur');
+
+INSERT INTO car VALUES('L1','Swift',2020);
+INSERT INTO car VALUES('L2','Honda',2021);
+INSERT INTO car VALUES('L3','Alto',2019);
+INSERT INTO car VALUES('L4','BMW',2022);
+INSERT INTO car VALUES('L5','Nexon',2023);
+
+INSERT INTO accident VALUES('R1','12-JAN-2024','Pune');
+INSERT INTO accident VALUES('R2','15-FEB-2024','Mumbai');
+INSERT INTO accident VALUES('R3','20-MAR-2024','Nashik');
+INSERT INTO accident VALUES('R4','25-APR-2024','Delhi');
+INSERT INTO accident VALUES('R5','30-MAY-2024','Nagpur');
+
+INSERT INTO owns VALUES('D1','L1');
+INSERT INTO owns VALUES('D2','L2');
+INSERT INTO owns VALUES('D3','L3');
+INSERT INTO owns VALUES('D4','L4');
+INSERT INTO owns VALUES('D5','L5');
+
+INSERT INTO participated VALUES('D1','L1','R1',5000);
+INSERT INTO participated VALUES('D2','L2','R2',8000);
+INSERT INTO participated VALUES('D3','L3','R3',3000);
+INSERT INTO participated VALUES('D4','L4','R4',10000);
+INSERT INTO participated VALUES('D5','L5','R5',7000);
+
+SELECT * FROM person;
+SELECT * FROM car;
+SELECT * FROM accident;
+SELECT * FROM owns;
+SELECT * FROM participated;
+
+DESC person;
+DESC car;
+DESC accident;
+DESC owns;
+DESC participated;
+
+SELECT * FROM person;
+
+ALTER TABLE participated
+ADD CONSTRAINT chk_damage
+CHECK(damage_amount>=0);
+
+ALTER TABLE person
+MODIFY name VARCHAR(30) NOT NULL;
+
+RENAME car TO vehicle;
+
+SELECT * FROM vehicle;
+
+CREATE TABLE new_person AS
+SELECT * FROM person;
+
+SELECT * FROM new_person;
+
+DROP TABLE new_person;
