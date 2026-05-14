@@ -1,0 +1,67 @@
+
+CREATE TABLE emp17(
+empno NUMBER PRIMARY KEY,
+ename VARCHAR2(20),
+deptno NUMBER,
+sal NUMBER,
+comm NUMBER
+);
+
+INSERT INTO emp17
+VALUES(101,'Riddhi',10,50000,5000);
+
+INSERT INTO emp17
+VALUES(102,'Amit',20,40000,4000);
+
+INSERT INTO emp17
+VALUES(103,'Neha',30,30000,3000);
+
+COMMIT;
+
+SET SERVEROUTPUT ON;
+
+DECLARE
+
+v_empno NUMBER := &empno;
+
+v_deptno NUMBER;
+
+v_sal NUMBER;
+
+v_comm NUMBER;
+
+BEGIN
+
+SELECT deptno,sal,comm
+INTO v_deptno,v_sal,v_comm
+FROM emp17
+WHERE empno = v_empno;
+
+IF v_deptno = 10 THEN
+
+UPDATE emp17
+SET sal = sal + sal*0.10
+WHERE empno = v_empno;
+
+DBMS_OUTPUT.PUT_LINE('10 PERCENT SALARY UPDATED');
+
+ELSIF v_deptno = 20 THEN
+
+UPDATE emp17
+SET sal = sal + sal*0.15
+WHERE empno = v_empno;
+
+DBMS_OUTPUT.PUT_LINE('15 PERCENT SALARY UPDATED');
+
+ELSE
+
+UPDATE emp17
+SET sal = sal + comm
+WHERE empno = v_empno;
+
+DBMS_OUTPUT.PUT_LINE('SALARY UPDATED WITH COMMISSION');
+
+END IF;
+
+END;
+/
